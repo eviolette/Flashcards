@@ -16,7 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.eviolette.flashcards.model.Deck;
+import com.eviolette.flashcards.model.Decks;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity
@@ -40,11 +48,13 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
+/*
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+                */
+
     }
 
     @Override
@@ -110,6 +120,8 @@ public class MainActivity extends ActionBarActivity
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        private Decks decks;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -135,6 +147,21 @@ public class MainActivity extends ActionBarActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            decks = new Decks();
+            ListView listView = (ListView) rootView.findViewById(R.id.decks);
+            List<String> deckNames = new LinkedList();
+/*
+            for (Deck deck : decks.getDecks()) {
+                deckNames.add(deck.getName());
+            }
+*/
+            deckNames.add("Chinese");
+            deckNames.add("Math");
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_list_item_1, android.R.id.text1, deckNames);
+            listView.setAdapter(adapter);
+
+
             return rootView;
         }
 
